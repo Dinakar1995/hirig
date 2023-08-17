@@ -3,7 +3,7 @@ pipeline {
         stages {
              stage('Git Checkout') {
                   steps {
-                        git branch: 'main', credentialsId: 'git-creds', url: 'https://github.com/javahometech/hiring/'
+                        git branch: 'main', credentialsId: 'Dinakar1995', url: 'https://github.com/Dinakar1995/hiring'
                       }
                   }
              stage( 'Maven Build') {
@@ -14,9 +14,9 @@ pipeline {
           stage('Tomcat Deploy') {
                 steps {
                     sshagent(['tomcat-creds']) {
-                         sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.24.151:/opt/tomcat9/webapps"
-                         sh "ssh ec2-user@172.31.24.151 /opt/tomcat9/bin/shutdown.sh"
-                         sh "ssh ec2-user@172.31.24.151 /opt/tomcat9/bin/startup.sh"
+                         sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.37.20:/opt/tomcat9/webapps"
+                         sh "ssh ec2-user@172.31.37.20 /opt/tomcat9/bin/shutdown.sh"
+                         sh "ssh ec2-user@172.31.37.20 /opt/tomcat9/bin/startup.sh"
                    }
                 }
            }
