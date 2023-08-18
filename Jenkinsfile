@@ -25,10 +25,10 @@ pipeline {
                       branch 'main'
                  }
                 steps {
-                    sshagent(['Dinakar1995']) {
+                    
                         echo "deploying in prod"
        
-                   }
+                
                 }
            }
       }
