@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+        stages {
              stage( 'Maven Build') {
                  when {
                       branch 'develop'
@@ -32,3 +32,4 @@ pipeline {
                 }
            }
       }
+}
