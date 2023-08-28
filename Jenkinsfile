@@ -11,7 +11,7 @@ pipeline {
                     sh "docker build -t dinakar1995/hiring:o.o.2 ."
                    }
                 }
-           }
+           
     stage('docker push') {
                 steps {
                      sh "docker login -u dinakar1995 -p xxxxx"
