@@ -2,33 +2,20 @@ pipeline {
     agent any
         stages {
              stage( 'Maven Build') {
-                 when {
-                      branch 'develop'
-                 }
                   steps {
                         sh "mvn clean package"
                         }
              }
-          stage('deploy to dev') {
-               when {
-                      branch 'develop'
-                 }
+          stage('Dokcer Build') {
                 steps {
-                    sshagent(['Dinakar1995']) {
-                        echo "deploying in dev"
-       
+                    sh "docker build -t dinakar1995/hiring:o.o.2 ."
                    }
                 }
            }
-    stage('deploy to prod') {
-               when {
-                      branch 'main'
-                 }
+    stage(Docker push') {
                 steps {
-                    
-                        echo "deploying in prod"
-       
-                
+                     sh "docker login -u dinakar1995 -p xxxxx"
+                     sh "docker push dinakar1995/hiring:o.o.2"
                 }
            }
       }
