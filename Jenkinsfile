@@ -23,7 +23,7 @@ pipeline {
     stage('Tomcat Deploy') {
           steps {
                 sshagent(['Dinakar1995']) {
-                sh "ssh ec2-user@172.31.35.199 docker run -d -p 8080:8080 --name hiring dinakar1995/hiring:0.0.2"
+                sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.35.199 docker run -d -p 8080:8080 --name hiring dinakar1995/hiring:0.0.2"
                          }
                     }
                 }
