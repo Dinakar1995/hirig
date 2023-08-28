@@ -12,7 +12,7 @@ pipeline {
                    }
                 }
            }
-    stage('docker push) {
+    stage('docker push') {
                 steps {
                      sh "docker login -u dinakar1995 -p xxxxx"
                      sh "docker push dinakar1995/hiring:o.o.2"
