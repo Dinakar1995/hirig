@@ -8,7 +8,7 @@ pipeline {
              }
           stage('Dokcer Build') {
                 steps {
-                    sh "docker build -t dinakar1995/hiring:${env.BUILD_NUMBER} ."
+                    sh "docker build -t dinakar1995/hiring:${commit_id()} ."
                    }
                 }
            
@@ -16,7 +16,7 @@ pipeline {
           steps {
                 withCredentials([string(credentialsId: 'hubPwd', variable: 'dockerhub')]) {
                      sh "docker login -u dinakar1995 -p ${dockerhub}"
-                     sh "docker push dinakar1995/hiring:${env.BUILD_NUMBER}"
+                     sh "docker push dinakar1995/hiring:${commit_id()}"
                     }
                 }
            }
@@ -24,11 +24,14 @@ pipeline {
           steps {
                 sshagent(['Dinakar1995']) {
 	        sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.35.199 docker rm -f hiring"    
-                sh "ssh ec2-user@172.31.35.199 docker run -d -p 8080:8080 --name hiring dinakar1995/hiring:${env.BUILD_NUMBER}"
+                sh "ssh ec2-user@172.31.35.199 docker run -d -p 8080:8080 --name hiring dinakar1995/hiring:${commit_id()}"
                       } 
                     }
                 }
            }
       
       }
-
+def commit_id(){
+    id = sh returnStdout: true, script: 'git rev-parse HEAD'
+    return id
+}
