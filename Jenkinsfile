@@ -8,7 +8,7 @@ pipeline {
              }
           stage('Dokcer Build') {
                 steps {
-                    sh "docker build -t dinakar1995/hiring:${commit_id()} ."
+                    sh "docker build . -t dinakar1995/hiring:${commit_id()}"
                    }
                 }
            
