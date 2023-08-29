@@ -8,7 +8,7 @@ pipeline {
              }
           stage('Dokcer Build') {
                 steps {
-                    sh "docker build -t dinakar1995/hiring:o.o.2 ."
+                    sh "docker build -t dinakar1995/hiring:${env.BUILD_NUMBER} ."
                    }
                 }
            
@@ -16,15 +16,15 @@ pipeline {
           steps {
                 withCredentials([string(credentialsId: 'hubPwd', variable: 'dockerhub')]) {
                      sh "docker login -u dinakar1995 -p ${dockerhub}"
-                     sh "docker push dinakar1995/hiring:o.o.2"
+                     sh "docker push dinakar1995/hiring:${env.BUILD_NUMBER}"
                     }
                 }
            }
     stage('Tomcat Deploy') {
           steps {
                 sshagent(['Dinakar1995']) {
-	            sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.35.199 docker rm -f hiring"
-                sh "ssh ec2-user@172.31.35.199 docker run -d -p 8080:8080 --name hiring dinakar1995/hiring:o.o.2"
+	            
+                sh "ssh ec2-user@172.31.35.199 docker run -d -p 8080:8080 --name hiring dinakar1995/hiring:${env.BUILD_NUMBER}"
                       } 
                     }
                 }
